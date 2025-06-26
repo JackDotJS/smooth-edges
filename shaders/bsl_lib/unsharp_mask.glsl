@@ -1,19 +1,17 @@
-vec2 sharpenOffsets[4] = vec2[4](
-	vec2( 1.0,  0.0),
-	vec2( 0.0,  1.0),
-	vec2(-1.0,  0.0),
-	vec2( 0.0, -1.0)
-);
-
+// Precalculated constant
+const float SHARP_STRENGTH = 0.125;
 
 void SharpenFilter(inout vec3 color, vec2 coord) {
-	float mult = MC_RENDER_QUALITY * 0.125;
-	vec2 view = 1.0 / vec2(viewWidth, viewHeight);
+    // Precalculate view-dependent values
+    vec2 view = 1.0 / vec2(viewWidth, viewHeight);
+    float mult = MC_RENDER_QUALITY * SHARP_STRENGTH;
+    
+    // Apply center pixel scaling
+    color *= MC_RENDER_QUALITY * 0.5 + 1.0;
 
-	color *= MC_RENDER_QUALITY * 0.5 + 1.0;
-
-	for(int i = 0; i < 4; i++) {
-		vec2 offset = sharpenOffsets[i] * view;
-		color -= texture2D(colortex1, coord + offset).rgb * mult;
-	}
+    // Unrolled loop with optimized texture sampling and vector operations
+    color -= texture2DLod(colortex1, coord + vec2( view.x,  0.0), 0.0).rgb * mult;
+    color -= texture2DLod(colortex1, coord + vec2( 0.0,  view.y), 0.0).rgb * mult;
+    color -= texture2DLod(colortex1, coord + vec2(-view.x,  0.0), 0.0).rgb * mult;
+    color -= texture2DLod(colortex1, coord + vec2( 0.0, -view.y), 0.0).rgb * mult;
 }

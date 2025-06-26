@@ -27,12 +27,12 @@ varying vec2 texCoord;
 
 void main()
 {
-    vec3 color = texture2DLod(colortex1, texCoord, 0.0).rgb;
-    vec4 prev = vec4(0.0, 0.0, 0.0, texture2DLod(colortex2, texCoord, 0).a);
+    vec3 sampledColor = texture2DLod(colortex1, texCoord, 0.0).rgb;
+    float prevAlpha = texture2DLod(colortex2, texCoord, 0.0).a;
 
-    prev = TemporalAA(color, prev.a);
+    vec4 prev = TemporalAA(sampledColor, prevAlpha); // Combine operations
 
     /*DRAWBUFFERS:12*/
-    gl_FragData[0] = vec4(color, 1.0);
-    gl_FragData[1] = vec4(prev);
+    gl_FragData[0] = vec4(sampledColor, 1.0);
+    gl_FragData[1] = prev; // No need to create a new vec4, use prev directly
 }
