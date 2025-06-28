@@ -13,7 +13,6 @@ This Minecraft shader pack aims to recreate vanilla rendering with the addition 
 - [ ] fix beacons using directional lighting
 - [ ] [Distant Horizons] add surface noise
 - [ ] [Distant Horizons] add SSAO
-- [ ] [Distant Horizons] fix DH geometry randomly switching between flat shading and directional shading
 
 ## Credits
 * Original shader pack from [leo60228](https://github.com/leo60228)
