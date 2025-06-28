@@ -22,6 +22,8 @@ uniform float viewWidth, viewHeight;
 
 void main()
 {
+    #ifndef DISTANT_HORIZONS
+    
     //Calculate world space position.
     vec3 pos = (gl_ModelViewMatrix * gl_Vertex).xyz;
     pos = (gbufferModelViewInverse * vec4(pos,1)).xyz;
@@ -36,4 +38,6 @@ void main()
     coord0 = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 
     gl_Position.xy = TAAJitter(gl_Position.xy, gl_Position.w);
+
+    #endif
 }

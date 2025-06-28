@@ -15,6 +15,8 @@ varying vec2 coord0;
 
 void main()
 {
+    #ifndef DISTANT_HORIZONS
+
     vec4 col = color * texture2D(texture, coord0);
 
     float fog = 0.0;
@@ -30,4 +32,6 @@ void main()
 
     /* DRAWBUFFERS:0 */
     gl_FragData[0] = col;
+
+    #endif
 }
