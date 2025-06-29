@@ -4,14 +4,22 @@ uniform sampler2D lightmap;
 uniform float viewHeight;
 uniform float viewWidth;
 
-uniform int isEyeInWater;
 uniform vec3 fogColor;
+uniform float fogStart;
+uniform float fogEnd;
+
+uniform vec3 skyColor;
+
+uniform int dhRenderDistance;
+
+uniform int isEyeInWater;
 
 uniform sampler2D depthtex0;
 
 in vec4 blockColor;
 in vec2 coord0;
 in vec2 coord1;
+in vec4 pos;
 
 void main() {
     vec4 albedo = blockColor * texture2D(lightmap, coord1);
@@ -26,15 +34,18 @@ void main() {
         discard;
     }
 
-    // TODO: this solution *might* be crap. it doesn't take into account
-    // fog distance at all, which theoretically results in a sudden sharp
-    // change in colors on the border between the DH geometry and the real
-    // world geometry. however, players probably dont see the world border
-    // while underwater anyway, so it might not matter? needs testing
-    if (isEyeInWater == 1) {
-        gl_FragData[0] = vec4(fogColor, 1);
-        return;
+    vec3 finalFogColor;
+    float fogFactor;
+
+    if (isEyeInWater == 0) {
+        fogFactor = smoothstep(0, dhRenderDistance * 4096, ((pos.z * pos.z) + (pos.x * pos.x)));
+        finalFogColor = mix(fogColor, skyColor, 0.2);
+    } else {
+        fogFactor = smoothstep(fogStart, fogEnd, ((pos.z * pos.z) + (pos.x * pos.x)));
+        finalFogColor = fogColor;
     }
+
+    albedo.rgb = mix(albedo.rgb, finalFogColor, fogFactor);
 
     gl_FragData[0] = albedo;
 }

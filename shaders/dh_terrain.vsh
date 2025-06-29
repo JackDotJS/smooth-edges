@@ -14,6 +14,7 @@ uniform vec3 cameraPosition;
 out vec4 blockColor;
 out vec2 coord0;
 out vec2 coord1;
+out vec4 pos;
 
 #include "/bsl_lib/util/jitter.glsl"
 
@@ -23,6 +24,7 @@ void main(){
 
     // Output position and fog to fragment shader
     gl_Position = gl_ProjectionMatrix * gbufferModelView * vec4(worldPos.xyz, 1.0);
+    pos = worldPos;
 
     float worldY = worldPos.y + cameraPosition.y;
 
