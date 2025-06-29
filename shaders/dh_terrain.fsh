@@ -37,11 +37,15 @@ void main() {
     vec3 finalFogColor;
     float fogFactor;
 
+    // for some reason gl_FogFragCoord doesn't work
+    // in dh_* programs so we have to do this calculation
+    float worldFragCoord = ((pos.x * pos.x) + (pos.y * pos.y) + (pos.z * pos.z));
+
     if (isEyeInWater == 0) {
-        fogFactor = smoothstep(0, dhRenderDistance * 4096, ((pos.z * pos.z) + (pos.x * pos.x)));
+        fogFactor = smoothstep(0, dhRenderDistance * 4096, worldFragCoord);
         finalFogColor = mix(fogColor, skyColor, 0.2);
     } else {
-        fogFactor = smoothstep(fogStart, fogEnd, ((pos.z * pos.z) + (pos.x * pos.x)));
+        fogFactor = smoothstep(fogStart, fogEnd, worldFragCoord);
         finalFogColor = fogColor;
     }
 
