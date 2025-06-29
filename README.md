@@ -2,8 +2,7 @@
 This Minecraft shader pack aims to recreate vanilla rendering with the addition of anti-aliasing. Based on [VanillAA shaders by leo60228](https://github.com/leo60228/VanillAA-Shaders)
 
 # To-do List
-- [ ] add additional AA options, like FXAA
-- [ ] fix missing fog rendering
+- [ ] add additional AA options (i.e, FXAA)
 - [ ] fix flickering in distant geometry
 - [ ] fix terrain old lighting being slightly darker than it should be
 - [ ] fix entity old lighting being slightly lighter than it should be
@@ -15,6 +14,7 @@ This Minecraft shader pack aims to recreate vanilla rendering with the addition 
 - [ ] fix fire overlay being drawn behind certain objects
 - [ ] [Distant Horizons] add surface noise
 - [ ] [Distant Horizons] add SSAO
+- [x] [Distant Horizons] fix missing fog rendering
 - [ ] [Distant Horizons] fix weird artifacting in non-solid geometry
 
 ## Credits
