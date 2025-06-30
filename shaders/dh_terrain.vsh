@@ -14,17 +14,15 @@ uniform vec3 cameraPosition;
 out vec4 blockColor;
 out vec2 coord0;
 out vec2 coord1;
-out vec4 pos;
+varying vec3 worldPos;
 
 #include "/bsl_lib/util/jitter.glsl"
 
 void main(){
     // Calculate world space position
-    vec4 worldPos = gbufferModelViewInverse * gl_ModelViewMatrix * gl_Vertex;
+    worldPos = (gbufferModelViewInverse * gl_ModelViewMatrix * gl_Vertex).xyz;
 
-    // Output position and fog to fragment shader
-    gl_Position = gl_ProjectionMatrix * gbufferModelView * vec4(worldPos.xyz, 1.0);
-    pos = worldPos;
+    gl_Position = gl_ProjectionMatrix * gbufferModelView * vec4(worldPos, 1.0);
 
     float worldY = worldPos.y + cameraPosition.y;
 
