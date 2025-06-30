@@ -9,6 +9,7 @@ This Minecraft shader pack aims to recreate vanilla rendering with the addition 
 - [ ] [Distant Horizons] add surface noise
 - [ ] [Distant Horizons] add SSAO
 - [ ] [Distant Horizons] add vanilla-DH border blending
+- [ ] [Distant Horizons] fix flickering water
 
 ## Credits
 * Original shader pack from [leo60228](https://github.com/leo60228)
