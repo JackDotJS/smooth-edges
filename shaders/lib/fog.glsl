@@ -5,7 +5,7 @@ uniform float fogEnd;
 uniform int fogShape;
 uniform int fogMode;
 
-#ifdef DHFOGTWEAK
+#ifdef DHTWEAK
 uniform vec3 skyColor;
 uniform int dhRenderDistance;
 uniform float blindness;
@@ -37,7 +37,7 @@ vec4 applyFog(vec4 albedo, vec3 pos) {
   float finalFogStart = fogStart;
   float finalFogEnd = fogEnd;
 
-  #ifdef DHFOGTWEAK
+  #ifdef DHTWEAK
   // TODO: make these values configurable
   if (isEyeInWater == 0) {
     // fog has a little bit of the sky color in DH

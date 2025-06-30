@@ -11,7 +11,7 @@ in vec2 coord0;
 in vec2 coord1;
 varying vec3 worldPos;
 
-#define DHFOGTWEAK;
+#define DHTWEAK;
 
 #include "/lib/fog.glsl"
 
