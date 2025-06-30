@@ -4,13 +4,13 @@ This Minecraft shader pack aims to recreate vanilla rendering with the addition 
 # To-do List
 - [ ] add additional AA options (i.e, FXAA)
 - [ ] fix flickering in distant geometry
-- [ ] fix terrain old lighting being slightly darker than it should be
+- [x] fix terrain old lighting being slightly darker than it should be
 - [ ] fix entity old lighting being slightly lighter than it should be
 - [ ] fix sky being visible while underwater
 - [ ] fix end portals
 - [ ] fix spider/enderman/dragon eyes not glowing
-- [ ] fix beacons using old lighting
-- [ ] fix missing old lighting on lava
+- [x] fix beacons using old lighting
+- [x] fix missing old lighting on lava
 - [ ] fix fire overlay being drawn behind certain objects
 - [ ] [Distant Horizons] add surface noise
 - [ ] [Distant Horizons] add SSAO
