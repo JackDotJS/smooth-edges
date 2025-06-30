@@ -27,7 +27,7 @@ void main() {
     float depth = texture2D(depthtex0, texCoord).r;
     if (depth < 1.0) discard;
 
-    if (length(worldPos) < far) discard;
+    if (length(worldPos) < (far * 0.75)) discard;
 
     albedo = applyFog(albedo, worldPos);
 
