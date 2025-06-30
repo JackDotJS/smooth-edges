@@ -26,35 +26,34 @@ void main(){
 
     float worldY = worldPos.y + cameraPosition.y;
 
-    // Calculate view space normal
-    vec3 normal = normalize(gl_NormalMatrix * gl_Normal);
-    normal = (gbufferModelViewInverse * vec4(normal, 0.0)).xyz;
+    vec4 albedo = gl_Color;
 
-    // old lighting values
-    // we're recreating old lighting from scratch here because 
-    // oldLighting=true in shader.properties has no effect on DH geometry
-    vec4 dirLightValues = vec4(
-        0.6, // east-west
-        0.8, // north-south
-        1.0, // top
-        0.5  // bottom
-    );
-
+    // recreating old lighting from scratch because 
+    // oldLighting=true in shader.properties has no
+    // effect on DH clouds for some reason
     if (worldY > (heightLimit + 192) && worldY < (heightLimit + 240)) {
-        // old lighting values for clouds
-        // which use different values, for some reason
-        dirLightValues = vec4(0.8, 0.9, 1.0, 0.7);
+        // Calculate view space normal
+        vec3 normal = normalize(gl_NormalMatrix * gl_Normal);
+        normal = (gbufferModelViewInverse * vec4(normal, 0.0)).xyz;
+
+        vec4 dirLightValues = vec4(
+            0.8, // east-west
+            0.9, // north-south
+            1.0, // top
+            0.7  // bottom
+        );
+
+        float ew = normal.x * normal.x * dirLightValues[0];
+        float ns = normal.z * normal.z * dirLightValues[1];
+        float tb = dirLightValues[2];
+        if (normal.y < 0) tb = dirLightValues[3];
+        tb = normal.y * normal.y * tb;
+        float lightIntensity = min(ew + ns + tb, 1.0);
+
+        albedo.rgb = albedo.rgb * lightIntensity;
 	}
 
-    // apply old lighting
-    float ew = normal.x * normal.x * dirLightValues[0];
-    float ns = normal.z * normal.z * dirLightValues[1];
-    float tb = dirLightValues[2];
-    if (normal.y < 0) tb = dirLightValues[3];
-    tb = normal.y * normal.y * tb;
-    float lightIntensity = min(ew + ns + tb, 1.0);
-
-    blockColor = vec4(gl_Color.rgb * lightIntensity, gl_Color.a);
+    blockColor = albedo;
 
     coord0 = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
 	coord1 = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
