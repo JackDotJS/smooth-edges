@@ -15,7 +15,7 @@ This Minecraft shader pack aims to recreate vanilla rendering with the addition 
 - [ ] [Distant Horizons] add surface noise
 - [ ] [Distant Horizons] add SSAO
 - [x] [Distant Horizons] fix missing fog rendering
-- [ ] [Distant Horizons] fix weird artifacting in non-solid geometry
+- [x] [Distant Horizons] fix weird artifacting in non-solid geometry
 
 ## Credits
 * Original shader pack from [leo60228](https://github.com/leo60228)

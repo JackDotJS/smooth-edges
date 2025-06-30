@@ -4,6 +4,8 @@ uniform sampler2D lightmap;
 uniform float viewHeight;
 uniform float viewWidth;
 
+uniform float far;
+
 uniform sampler2D depthtex0;
 
 in vec4 blockColor;
@@ -22,13 +24,13 @@ void main() {
     if (transparency < 0.001) discard;
 
     vec2 texCoord = gl_FragCoord.xy / vec2(viewWidth, viewHeight);
-    float depth = texture(depthtex0, texCoord).r;
+    float depth = texture2D(depthtex0, texCoord).r;
+    if (depth < 1.0) discard;
 
-    if (depth < 1.0) {
-        discard;
-    }
+    if (length(worldPos) < far) discard;
 
     albedo = applyFog(albedo, worldPos);
 
     gl_FragData[0] = albedo;
+    // gl_FragData[0] = vec4(vec3(cyl), 1);
 }
