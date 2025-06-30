@@ -1,3 +1,4 @@
+uniform int isEyeInWater;
 uniform vec3 fogColor;
 uniform float fogStart;
 uniform float fogEnd;
@@ -6,8 +7,8 @@ uniform int fogMode;
 
 #ifdef DHFOGTWEAK
 uniform vec3 skyColor;
-uniform int isEyeInWater;
 uniform int dhRenderDistance;
+uniform float blindness;
 #endif
 
 // int GL_EXP = 2048;
@@ -42,11 +43,19 @@ vec4 applyFog(vec4 albedo, vec3 pos) {
     // fog has a little bit of the sky color in DH
     // dont ask me why, this is just what i found
     // through testing
-    finalFogColor = mix(fogColor, skyColor, 0.15);
+    finalFogColor = mix(mix(fogColor, skyColor, 0.15), fogColor, blindness);
 
     // based on DH's default values
-    finalFogStart = dhRenderDistance * 0.4;
-    finalFogEnd = dhRenderDistance;
+    finalFogStart = mix(dhRenderDistance * 0.4, fogStart, blindness);
+    finalFogEnd = mix(dhRenderDistance, fogEnd, blindness);
+  }
+  #endif
+
+  #ifdef SKY
+  if (isEyeInWater == 0) {
+    return albedo;
+  } else {
+    discard;
   }
   #endif
 
