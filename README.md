@@ -8,7 +8,7 @@ This Minecraft shader pack aims to recreate vanilla rendering with the addition 
 - [x] fix missing old lighting on entities
 - [ ] fix sky and stars being visible while underwater
 - [ ] fix end portals
-- [ ] fix spider/enderman/dragon eyes not glowing
+- [x] fix spider/enderman/dragon eyes not glowing
 - [x] fix beacons using old lighting
 - [x] fix missing old lighting on lava
 - [ ] fix fire overlay being drawn behind certain objects
