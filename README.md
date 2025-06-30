@@ -5,7 +5,7 @@ This Minecraft shader pack aims to recreate vanilla rendering with the addition 
 - [ ] add additional AA options (i.e, FXAA)
 - [ ] fix flickering in distant geometry
 - [x] fix terrain old lighting being slightly darker than it should be
-- [ ] fix missing old lighting on entities
+- [x] fix missing old lighting on entities
 - [ ] fix sky and stars being visible while underwater
 - [ ] fix end portals
 - [ ] fix spider/enderman/dragon eyes not glowing
