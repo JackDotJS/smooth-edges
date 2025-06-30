@@ -18,6 +18,7 @@ uniform mat4 gbufferModelViewInverse;
 varying vec4 color;
 varying vec2 coord0;
 varying vec2 coord1;
+varying vec3 worldPos;
 
 uniform int frameCounter;
 
@@ -29,11 +30,10 @@ uniform float viewHeight;
 
 void main() {
     // Calculate world space position
-    vec3 worldPos = (gbufferModelViewInverse * gl_ModelViewMatrix * gl_Vertex).xyz;
+    worldPos = (gbufferModelViewInverse * gl_ModelViewMatrix * gl_Vertex).xyz;
 
     // Output position and fog to fragment shader
     gl_Position = gl_ProjectionMatrix * gbufferModelView * vec4(worldPos, 1.0);
-    gl_FogFragCoord = length(worldPos);
 
     // Calculate view space normal
     vec3 normal = normalize(gl_NormalMatrix * gl_Normal);

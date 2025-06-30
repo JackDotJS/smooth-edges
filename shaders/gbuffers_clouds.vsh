@@ -13,6 +13,7 @@ uniform mat4 gbufferModelViewInverse;
 //Pass vertex information to fragment shader.
 varying vec4 color;
 varying vec2 coord0;
+varying vec3 worldPos;
 
 uniform int frameCounter;
 
@@ -25,12 +26,10 @@ void main()
     #ifndef DISTANT_HORIZONS
     
     //Calculate world space position.
-    vec3 pos = (gl_ModelViewMatrix * gl_Vertex).xyz;
-    pos = (gbufferModelViewInverse * vec4(pos,1)).xyz;
+    worldPos = (gbufferModelViewInverse * gl_ModelViewMatrix * gl_Vertex).xyz;
 
     //Output position and fog to fragment shader.
-    gl_Position = gl_ProjectionMatrix * gbufferModelView * vec4(pos,1);
-    gl_FogFragCoord = length(pos);
+    gl_Position = gl_ProjectionMatrix * gbufferModelView * vec4(worldPos, 1.0);
 
     //Output color to fragment shader.
     color = gl_Color;

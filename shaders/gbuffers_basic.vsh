@@ -10,6 +10,7 @@ uniform mat4 gbufferModelViewInverse;
 
 // Pass vertex information to fragment shader
 varying vec4 color;
+varying vec3 worldPos;
 
 uniform int frameCounter;
 uniform float viewWidth, viewHeight;
@@ -19,11 +20,10 @@ uniform float viewWidth, viewHeight;
 void main()
 {
     // Transform vertex position to world space using inverse model-view matrix
-    vec3 worldPos = (gbufferModelViewInverse * (gl_ModelViewMatrix * gl_Vertex)).xyz;
+    worldPos = (gbufferModelViewInverse * gl_ModelViewMatrix * gl_Vertex).xyz;
 
     // Calculate clip position using transformed world position
     gl_Position = gl_ProjectionMatrix * gbufferModelView * vec4(worldPos, 1.0);
-    gl_FogFragCoord = length(worldPos);
 
     // Pass vertex color to fragment shader
     color = gl_Color;
