@@ -35,8 +35,15 @@ void main() {
     // Output position and fog to fragment shader
     gl_Position = gl_ProjectionMatrix * gbufferModelView * vec4(worldPos, 1.0);
 
+    // Calculate view space normal
+    vec3 normal = normalize(gl_NormalMatrix * gl_Normal);
+    normal = (mc_Entity == 1.0) ? vec3(0.0, 1.0, 0.0) : (gbufferModelViewInverse * vec4(normal, 0.0)).xyz;
+
+    // Calculate simple lighting
+    float lightIntensity = min(normal.x * normal.x * 0.6 + normal.y * normal.y * 0.25 * (3.0 + normal.y) + normal.z * normal.z * 0.8, 1.0);
+
     // Output color with lighting to fragment shader
-    fragColor = gl_Color;
+    fragColor = vec4(gl_Color.rgb * lightIntensity, gl_Color.a);
 
     // Output texture coordinates to fragment shader
     texCoord0 = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
